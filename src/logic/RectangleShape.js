@@ -5,6 +5,8 @@ export class RectangleShape {
 	 * @param {number} y
 	 */
 	constructor({x, y}) {
+		this._onRotationEnd = this._onRotationEnd.bind(this);
+		
 		this._startingPoint = {x, y};
 		this._endingPoint = {x, y};
 		
@@ -23,7 +25,7 @@ export class RectangleShape {
 		
 		elementDom.classList.add('shape-rectangle');
 		
-		this._color  = Math
+		this._color = Math
 			.trunc(Math.random() * 0xffffff)
 			.toString(16)
 			.padStart(6, '0');
@@ -48,6 +50,24 @@ export class RectangleShape {
 		
 		this._elementDom.style.width = `${width}px`;
 		this._elementDom.style.height = `${height}px`;
+	}
+	
+	/**
+	 * @private
+	 */
+	_onDoubleClick() {
+		this._elementDom.addEventListener('transitionend', this._onRotationEnd);
+		
+		this._elementDom.style.transform = 'rotate(360deg)';
+	}
+	
+	/**
+	 * @private
+	 */
+	_onRotationEnd() {
+		this._elementDom.removeEventListener('transitionend', this._onRotationEnd);
+		
+		this.remove();
 	}
 	
 	//</editor-fold>
@@ -76,6 +96,8 @@ export class RectangleShape {
 	 */
 	finalize({x, y}) {
 		this.draw({x, y});
+		
+		this._elementDom.addEventListener('dblclick', () => this._onDoubleClick());
 	}
 	
 	/**
