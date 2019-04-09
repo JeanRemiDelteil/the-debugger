@@ -16,7 +16,10 @@ export const DrawShape = function (containerDOM, Shape) {
 	function _onMouseDown(event) {
 		
 		// Instantiate a new Shape and set up drawing callbacks
-		const shape = new Shape(event);
+		const shape = new Shape({
+			x: event.x,
+			y: event.y,
+		});
 		shapes.push(shape);
 		
 		
@@ -24,7 +27,10 @@ export const DrawShape = function (containerDOM, Shape) {
 		 * @param {MouseEvent} event
 		 */
 		function _onMouseMove(event) {
-			shape.onMove(event);
+			shape.onMove({
+				x: event.x,
+				y: event.y,
+			});
 		}
 		
 		/**
@@ -34,7 +40,10 @@ export const DrawShape = function (containerDOM, Shape) {
 			containerDOM.removeEventListener('mousemove', _onMouseMove);
 			containerDOM.removeEventListener('mouseup', _onMouseUp);
 			
-			shape.onFinalize(event);
+			shape.onFinalize({
+				x: event.x,
+				y: event.y,
+			});
 		}
 		
 		containerDOM.addEventListener('mousemove', _onMouseMove);

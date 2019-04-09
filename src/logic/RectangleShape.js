@@ -27,7 +27,6 @@ export class RectangleShape {
 		this._elementDom = elementDom;
 	}
 	
-	
 	/**
 	 * @private
 	 */
