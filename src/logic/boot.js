@@ -1,2 +1,7 @@
+import {DrawShape} from './DrawRectangle.js';
+import {RectangleShape} from './RectangleShape.js';
 
-document.body.innerText = 'Hey !';
+
+const rectangleDrawer = DrawShape(document.body, RectangleShape);
+
+rectangleDrawer.setListeners();
