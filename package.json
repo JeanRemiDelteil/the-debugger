@@ -1,0 +1,11 @@
+{
+	"name": "rotating-rectangles",
+	"version": "0.0.1",
+	"scripts": {
+		"start": "http-server ./src/"
+	},
+	"devDependencies": {
+		"http-server": "latest"
+	},
+	"dependencies": {}
+}
