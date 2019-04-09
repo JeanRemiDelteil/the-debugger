@@ -14,6 +14,9 @@ export const DrawShape = function (containerDOM, Shape) {
 	 * @param {MouseEvent} event
 	 */
 	function _onMouseDown(event) {
+		// avoid parallel drawings
+		containerDOM.removeEventListener('mousedown', _onMouseDown);
+		
 		
 		// Instantiate a new Shape and set up drawing callbacks
 		const shape = new Shape({
@@ -45,6 +48,9 @@ export const DrawShape = function (containerDOM, Shape) {
 				x: event.x,
 				y: event.y,
 			});
+			
+			// Set initial listener back !
+			containerDOM.addEventListener('mousedown', _onMouseDown);
 		}
 		
 		containerDOM.addEventListener('mousemove', _onMouseMove);
