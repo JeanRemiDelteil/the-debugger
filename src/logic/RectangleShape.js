@@ -64,7 +64,7 @@ export class RectangleShape {
 	 * @param {number} x
 	 * @param {number} y
 	 */
-	onMove({x, y}) {
+	draw({x, y}) {
 		this._endingPoint = {x, y};
 		
 		this._updateElementPosition();
@@ -74,9 +74,22 @@ export class RectangleShape {
 	 * @param {number} x
 	 * @param {number} y
 	 */
-	onFinalize({x, y}) {
+	finalize({x, y}) {
+		this.draw({x, y});
+	}
+	
+	/**
+	 * Removes the Dom element from its parents and clean up
+	 */
+	remove() {
+		if (!this._elementDom) return;
+		if (!this._elementDom.parentElement) {
+			this._elementDom = null;
+			
+			return;
+		}
 		
-		this.onMove({x, y});
-		
+		this._elementDom.parentElement.removeChild(this._elementDom);
+		this._elementDom = null;
 	}
 }
