@@ -22,7 +22,13 @@ export class RectangleShape {
 		const elementDom = document.createElement('div');
 		
 		elementDom.classList.add('shape-rectangle');
-		elementDom.style.backgroundColor = `#${Math.trunc(Math.random() * 0xffffff).toString(16)}`;
+		
+		this._color  = Math
+			.trunc(Math.random() * 0xffffff)
+			.toString(16)
+			.padStart(6, '0');
+		
+		elementDom.style.backgroundColor = `#${this._color}`;
 		
 		this._elementDom = elementDom;
 	}

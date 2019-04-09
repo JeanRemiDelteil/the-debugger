@@ -39,6 +39,7 @@ export const DrawShape = function (containerDOM, Shape) {
 		function _onMouseUp(event) {
 			containerDOM.removeEventListener('mousemove', _onMouseMove);
 			containerDOM.removeEventListener('mouseup', _onMouseUp);
+			containerDOM.removeEventListener('mouseleave', _onMouseUp);
 			
 			shape.onFinalize({
 				x: event.x,
@@ -48,6 +49,7 @@ export const DrawShape = function (containerDOM, Shape) {
 		
 		containerDOM.addEventListener('mousemove', _onMouseMove);
 		containerDOM.addEventListener('mouseup', _onMouseUp);
+		containerDOM.addEventListener('mouseleave', _onMouseUp);
 		
 		containerDOM.appendChild(shape.getElement());
 	}
