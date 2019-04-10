@@ -3,9 +3,17 @@ export class RectangleShape {
 	/**
 	 * @param {number} x
 	 * @param {number} y
+	 * @param {function(shape: RectangleShape): void} onRotationStart
+	 * @param {function(shape: RectangleShape): void} onRotationStop
 	 */
-	constructor({x, y}) {
+	constructor({x, y, onRotationStart, onRotationStop}) {
 		this._onRotationEnd = this._onRotationEnd.bind(this);
+		
+		this._callbacks = {
+			onRotationStart,
+			onRotationStop,
+		};
+		this._hasRotated = false;
 		
 		this._startingPoint = {x, y};
 		this._endingPoint = {x, y};
@@ -56,7 +64,11 @@ export class RectangleShape {
 	 * @private
 	 */
 	_onDoubleClick() {
+		if (this._hasRotated) return;
+		this._hasRotated = false;
+		
 		this._elementDom.addEventListener('transitionend', this._onRotationEnd);
+		this._callbacks.onRotationStart(this);
 		
 		this._elementDom.style.transform = 'rotate(360deg)';
 	}
@@ -66,8 +78,7 @@ export class RectangleShape {
 	 */
 	_onRotationEnd() {
 		this._elementDom.removeEventListener('transitionend', this._onRotationEnd);
-		
-		this.remove();
+		this._callbacks.onRotationStop(this);
 	}
 	
 	//</editor-fold>

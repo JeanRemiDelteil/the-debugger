@@ -4,14 +4,54 @@
  */
 export const DrawShape = function (containerDOM, Shape) {
 	
+	// noinspection JSMismatchedCollectionQueryUpdate
 	/**
-	 * @type {RectangleShape[]}
+	 * Keep track of all drawn shapes
+	 * not useful for now
+	 * 
+	 * @type {Set<RectangleShape>}
 	 */
-	const shapes = [];
+	const shapes = new Set();
+	
+	/**
+	 * @type {Set<RectangleShape>}
+	 */
+	let rotatingShapes = new Set();
+	let numberOfRotatingShapes = 0;
+	
+	
+	/**
+	 * @param {RectangleShape} shape
+	 * @private
+	 */
+	function _onShapeRotateStart(shape) {
+		rotatingShapes.add(shape);
+		numberOfRotatingShapes++;
+	}
+	
+	/**
+	 * @param {RectangleShape} shape
+	 * @private
+	 */
+	function _onShapeRotateStop(shape) {
+		numberOfRotatingShapes--;
+		
+		if (numberOfRotatingShapes) return;
+		
+		// Remove all shapes having rotated & finished
+		rotatingShapes.forEach(shape => {
+			shapes.delete(shape);
+			
+			shape.remove();
+		});
+		
+		rotatingShapes = new Set();
+	}
 	
 	
 	/**
 	 * @param {MouseEvent} event
+	 * @private
 	 */
 	function _onMouseDown(event) {
 		// avoid parallel drawings
@@ -21,6 +61,8 @@ export const DrawShape = function (containerDOM, Shape) {
 		const shape = new Shape({
 			x: event.x,
 			y: event.y,
+			onRotationStart: _onShapeRotateStart,
+			onRotationStop: _onShapeRotateStop
 		});
 		let hasMouseMoved = false;
 		
@@ -53,7 +95,7 @@ export const DrawShape = function (containerDOM, Shape) {
 					x: event.x,
 					y: event.y,
 				});
-				shapes.push(shape);
+				shapes.add(shape);
 			}
 			else {
 				shape.remove();
