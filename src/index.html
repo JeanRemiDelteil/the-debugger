@@ -6,7 +6,10 @@
 	
 	<title>The debugger</title>
 	
-	<script src="logic/boot.js" type="module"></script>
+	<script src="boot.esm.js" type="module"></script>
+	
+	<script src="polyfill.min.js" nomodule></script>
+	<script src="boot.es5.js" nomodule></script>
 	
 	<link rel="stylesheet" href="style.css">
 </head>
