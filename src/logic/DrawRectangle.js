@@ -2,6 +2,12 @@ import {getCursorPos} from './GetCursorPos.js';
 
 
 /**
+ * In Pixels
+ * @type {number}
+ */
+const MINIMUM_MOUSE_MOVE = 5;
+
+/**
  * @param {HTMLElement} containerDOM
  * @param {RectangleShape} Shape
  */
@@ -68,12 +74,17 @@ export const DrawShape = function (containerDOM, Shape) {
 			onRotationStop: _onShapeRotateStop,
 		});
 		let hasMouseMoved = false;
-		
+		const mouseStartPosition = {
+			x: event.pageX,
+			y: event.pageY,
+		};
 		
 		/**
 		 * @param {MouseEvent} event
 		 */
 		function _onMouseMove(event) {
+			if (Math.abs(event.pageX - mouseStartPosition.x) < MINIMUM_MOUSE_MOVE || Math.abs(event.pageX - mouseStartPosition.x) < MINIMUM_MOUSE_MOVE) return;
+			
 			shape.draw(getCursorPos(event, containerDOM));
 			
 			/**
