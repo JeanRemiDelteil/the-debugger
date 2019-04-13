@@ -4,8 +4,9 @@
 	"scripts": {
 		"start": "http-server ./src/",
 		"serve": "http-server ./dist/",
+		"serve-dev": "webpack-dev-server --open --progress --development",
 		"build": "webpack --progress",
-		"watch": "webpack --progress --watch"
+		"watch": "webpack --progress --watch --development"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.4.3",
@@ -17,7 +18,8 @@
 		"style-loader": "^0.23.1",
 		"terser-webpack-plugin": "^1.2.3",
 		"webpack": "^4.29.6",
-		"webpack-cli": "^3.3.0"
+		"webpack-cli": "^3.3.0",
+		"webpack-dev-server": "^3.3.1"
 	},
 	"dependencies": {
 		"@babel/polyfill": "^7.4.3"
