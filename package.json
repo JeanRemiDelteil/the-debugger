@@ -2,10 +2,24 @@
 	"name": "rotating-rectangles",
 	"version": "0.0.1",
 	"scripts": {
-		"start": "http-server ./src/"
+		"start": "http-server ./src/",
+		"serve": "http-server ./dist/",
+		"build": "webpack --progress",
+		"watch": "webpack --progress --watch"
 	},
 	"devDependencies": {
-		"http-server": "latest"
+		"@babel/core": "^7.4.3",
+		"@babel/preset-env": "^7.4.3",
+		"babel-loader": "^8.0.5",
+		"copy-webpack-plugin": "^5.0.2",
+		"css-loader": "^2.1.1",
+		"http-server": "latest",
+		"style-loader": "^0.23.1",
+		"terser-webpack-plugin": "^1.2.3",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"@babel/polyfill": "^7.4.3"
+	}
 }
