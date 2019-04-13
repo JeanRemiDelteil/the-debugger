@@ -65,7 +65,7 @@ export class RectangleShape {
 	 */
 	_onDoubleClick() {
 		if (this._hasRotated) return;
-		this._hasRotated = false;
+		this._hasRotated = true;
 		
 		this._elementDom.addEventListener('transitionend', this._onRotationEnd);
 		this._callbacks.onRotationStart(this);
