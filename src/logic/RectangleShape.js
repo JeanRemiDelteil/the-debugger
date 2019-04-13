@@ -1,3 +1,10 @@
+/**
+ * In percents of container size
+ * @type {number}
+ */
+const MINIMUM_SHAPE_SIZE = 1;
+
+
 export class RectangleShape {
 	
 	/**
@@ -16,7 +23,7 @@ export class RectangleShape {
 		this._hasRotated = false;
 		
 		this._startingPoint = {x, y};
-		this._endingPoint = {x, y};
+		this._endingPoint = this._startingPoint;
 		
 		this._initElement();
 		this._updateElementPosition();
@@ -47,11 +54,27 @@ export class RectangleShape {
 	 * @private
 	 */
 	_updateElementPosition() {
-		const left = Math.min(this._startingPoint.x, this._endingPoint.x);
-		const top = Math.min(this._startingPoint.y, this._endingPoint.y);
+		if (this._startingPoint === this._endingPoint) return;
 		
-		const width = Math.abs(this._endingPoint.x - this._startingPoint.x);
-		const height = Math.abs(this._endingPoint.y - this._startingPoint.y);
+		const endPoint = {
+			...this._endingPoint,
+		};
+		
+		let width = Math.abs(endPoint.x - this._startingPoint.x);
+		let height = Math.abs(endPoint.y - this._startingPoint.y);
+		
+		if (width < MINIMUM_SHAPE_SIZE) {
+			width = MINIMUM_SHAPE_SIZE;
+			endPoint.x = this._startingPoint.x + Math.sign(endPoint.x - this._startingPoint.x) * MINIMUM_SHAPE_SIZE;
+		}
+		if (height < MINIMUM_SHAPE_SIZE) {
+			height = MINIMUM_SHAPE_SIZE;
+			endPoint.y = this._startingPoint.y + Math.sign(endPoint.y - this._startingPoint.y) * MINIMUM_SHAPE_SIZE;
+		}
+		
+		const left = Math.min(this._startingPoint.x, endPoint.x);
+		const top = Math.min(this._startingPoint.y, endPoint.y);
+		
 		
 		this._elementDom.style.left = `${left}%`;
 		this._elementDom.style.top = `${top}%`;
