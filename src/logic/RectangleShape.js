@@ -53,11 +53,11 @@ export class RectangleShape {
 		const width = Math.abs(this._endingPoint.x - this._startingPoint.x);
 		const height = Math.abs(this._endingPoint.y - this._startingPoint.y);
 		
-		this._elementDom.style.left = `${left}px`;
-		this._elementDom.style.top = `${top}px`;
+		this._elementDom.style.left = `${left}%`;
+		this._elementDom.style.top = `${top}%`;
 		
-		this._elementDom.style.width = `${width}px`;
-		this._elementDom.style.height = `${height}px`;
+		this._elementDom.style.width = `${width}%`;
+		this._elementDom.style.height = `${height}%`;
 	}
 	
 	/**
