@@ -11,7 +11,7 @@ export function getCursorPos(mouseEvent, refElementDOM) {
 	const refRect = refElementDOM.getBoundingClientRect();
 	
 	return {
-		x: mouseEvent.pageX - refRect.left,
-		y: mouseEvent.pageY - refRect.top,
+		x: 100 * (mouseEvent.pageX - refRect.left) / refRect.width,
+		y: 100 * (mouseEvent.pageY - refRect.top) / refRect.height,
 	};
 }
