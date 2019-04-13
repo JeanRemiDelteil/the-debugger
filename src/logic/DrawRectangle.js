@@ -1,3 +1,6 @@
+import {getCursorPos} from './GetCursorPos.js';
+
+
 /**
  * @param {HTMLElement} containerDOM
  * @param {RectangleShape} Shape
@@ -8,7 +11,7 @@ export const DrawShape = function (containerDOM, Shape) {
 	/**
 	 * Keep track of all drawn shapes
 	 * not useful for now
-	 * 
+	 *
 	 * @type {Set<RectangleShape>}
 	 */
 	const shapes = new Set();
@@ -59,10 +62,10 @@ export const DrawShape = function (containerDOM, Shape) {
 		
 		// Instantiate a new Shape and set up drawing callbacks
 		const shape = new Shape({
-			x: event.x,
-			y: event.y,
+			...getCursorPos(event, containerDOM),
+			
 			onRotationStart: _onShapeRotateStart,
-			onRotationStop: _onShapeRotateStop
+			onRotationStop: _onShapeRotateStop,
 		});
 		let hasMouseMoved = false;
 		
@@ -71,10 +74,7 @@ export const DrawShape = function (containerDOM, Shape) {
 		 * @param {MouseEvent} event
 		 */
 		function _onMouseMove(event) {
-			shape.draw({
-				x: event.x,
-				y: event.y,
-			});
+			shape.draw(getCursorPos(event, containerDOM));
 			
 			/**
 			 * Double click is fired only if the mouse did not moved between clicks
@@ -91,10 +91,7 @@ export const DrawShape = function (containerDOM, Shape) {
 			containerDOM.removeEventListener('mouseleave', _onMouseUp);
 			
 			if (hasMouseMoved) {
-				shape.finalize({
-					x: event.x,
-					y: event.y,
-				});
+				shape.finalize(getCursorPos(event, containerDOM));
 				shapes.add(shape);
 			}
 			else {

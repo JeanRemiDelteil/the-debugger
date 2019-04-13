@@ -95,12 +95,14 @@ function buildConfig({target, devMode}) {
 				{from: `./node_modules/@babel/polyfill/dist/polyfill.min.js`},
 				{from: `./src/index.html`},
 				{from: `./src/style.css`},
+				{from: `./src/favicon.ico`},
 			]),
 		],
 		
 		optimization: {
 			minimizer: [
 				new TerserPlugin({
+					...devMode && {sourceMap: true} || {},
 					test: /\.js$/i,
 					//exclude: /exclude/,
 					terserOptions: {
@@ -123,8 +125,7 @@ function buildConfig({target, devMode}) {
 
 
 function getConfig(env, argv) {
-	const devMode = argv.mode === 'development';
-	
+	const devMode = argv['development'];
 	
 	return [
 		buildConfig({
